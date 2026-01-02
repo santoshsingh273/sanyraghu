@@ -3,15 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF to Word Converter</title>
+    <title>PDF to Word - Simple</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
+        }
+        
+        .config-banner {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 20px;
+        }
+        
+        .config-banner strong {
+            color: #856404;
+            font-size: 16px;
+        }
+        
+        .config-input {
+            margin-top: 10px;
+            width: 100%;
+            max-width: 600px;
+            padding: 10px;
+            font-size: 14px;
+            border: 2px solid #ffc107;
+            border-radius: 5px;
         }
         
         .container {
@@ -27,20 +57,20 @@
             color: #667eea;
             text-align: center;
             margin-bottom: 10px;
-            font-size: 32px;
+            font-size: 28px;
         }
         
         .subtitle {
             text-align: center;
             color: #666;
             margin-bottom: 30px;
-            font-size: 16px;
+            font-size: 14px;
         }
         
         .upload-area {
             border: 3px dashed #667eea;
             border-radius: 15px;
-            padding: 50px;
+            padding: 40px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -59,40 +89,42 @@
         }
         
         .upload-icon {
-            font-size: 70px;
+            font-size: 60px;
             color: #667eea;
             margin-bottom: 20px;
         }
         
         .upload-text {
             color: #333;
-            font-size: 20px;
+            font-size: 18px;
             margin-bottom: 10px;
-            font-weight: 600;
         }
         
         .upload-subtext {
             color: #999;
-            font-size: 15px;
+            font-size: 14px;
         }
         
-        input[type="file"] { display: none; }
+        input[type="file"] {
+            display: none;
+        }
         
         .file-info {
             margin-top: 20px;
-            padding: 20px;
+            padding: 15px;
             background: #f0f4ff;
             border-radius: 10px;
             display: none;
         }
         
-        .file-info.show { display: block; }
+        .file-info.show {
+            display: block;
+        }
         
         .file-name {
             color: #667eea;
             font-weight: bold;
-            margin-bottom: 8px;
-            font-size: 16px;
+            margin-bottom: 5px;
         }
         
         .file-size {
@@ -108,10 +140,10 @@
         
         button {
             flex: 1;
-            padding: 18px 30px;
+            padding: 15px 30px;
             border: none;
             border-radius: 10px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -124,7 +156,7 @@
         
         .btn-convert:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
         
         .btn-convert:disabled {
@@ -144,14 +176,16 @@
         
         .progress {
             display: none;
-            margin-top: 25px;
+            margin-top: 20px;
         }
         
-        .progress.show { display: block; }
+        .progress.show {
+            display: block;
+        }
         
         .progress-bar {
             width: 100%;
-            height: 10px;
+            height: 8px;
             background: #e5e7eb;
             border-radius: 10px;
             overflow: hidden;
@@ -172,88 +206,124 @@
         
         .progress-text {
             text-align: center;
-            margin-top: 12px;
+            margin-top: 10px;
             color: #667eea;
+            font-weight: bold;
+        }
+        
+        .result {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0fdf4;
+            border: 2px solid #86efac;
+            border-radius: 10px;
+        }
+        
+        .result.show {
+            display: block;
+        }
+        
+        .result-title {
+            color: #16a34a;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .download-btn {
+            display: block;
+            width: 100%;
+            padding: 15px 20px;
+            margin-top: 15px;
+            background: #16a34a;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
             font-weight: bold;
             font-size: 16px;
         }
         
-        .success {
-            display: none;
-            margin-top: 30px;
-            padding: 25px;
-            background: #f0fdf4;
-            border: 3px solid #86efac;
-            border-radius: 15px;
-            text-align: center;
+        .download-btn:hover {
+            background: #15803d;
+            transform: translateY(-2px);
         }
         
-        .success.show { display: block; }
-        
-        .success-icon {
-            font-size: 60px;
-            margin-bottom: 15px;
-        }
-        
-        .success-title {
-            color: #16a34a;
-            font-weight: bold;
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
-        
-        .success-text {
+        .result-info {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            font-size: 13px;
             color: #666;
-            font-size: 14px;
         }
         
         .error {
             display: none;
-            margin-top: 25px;
-            padding: 20px;
+            margin-top: 20px;
+            padding: 15px;
             background: #fee;
-            border: 3px solid #fca5a5;
+            border: 2px solid #fca5a5;
             border-radius: 10px;
             color: #dc2626;
-            font-weight: 600;
         }
         
-        .error.show { display: block; }
-        
-        .creator {
-            text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-            margin-top: 40px;
+        .error.show {
+            display: block;
         }
         
-        .creator h2 {
-            color: white;
-            font-size: 24px;
+        .features {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #e5e7eb;
+        }
+        
+        .features h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            color: #666;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            color: #16a34a;
             font-weight: bold;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .creator h1 {
-            color: #FFD700;
-            font-size: 36px;
-            font-weight: bold;
-            margin: 0;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
-            letter-spacing: 3px;
+            margin-right: 10px;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
+    <div class="config-banner">
+        <strong>⚙️ Webhook URL</strong>
+        <br>
+        <input type="text" 
+               class="config-input" 
+               id="webhookUrlInput" 
+               placeholder="https://n8n.bluechipcomputers.in/webhook/pdf-to-word-final"
+               value="https://n8n.bluechipcomputers.in/webhook/pdf-to-word-final">
+    </div>
+
     <div class="container">
         <h1>📄 PDF to Word</h1>
-        <p class="subtitle">Upload PDF, Get Word Document Instantly</p>
+        <p class="subtitle">Simple Text Extraction - जैसा है वैसा ही</p>
         
         <div class="upload-area" id="uploadArea">
             <div class="upload-icon">📁</div>
-            <div class="upload-text">Click to Upload PDF</div>
+            <div class="upload-text">PDF File Upload करें</div>
             <div class="upload-subtext">या यहाँ Drag & Drop करें</div>
             <input type="file" id="fileInput" accept=".pdf">
         </div>
@@ -265,7 +335,7 @@
         
         <div class="btn-container">
             <button class="btn-convert" id="convertBtn" disabled>
-                🔄 Convert to Word
+                📄 Extract Text
             </button>
             <button class="btn-reset" id="resetBtn">
                 ↺ Reset
@@ -279,23 +349,30 @@
             <div class="progress-text" id="progressText">Processing...</div>
         </div>
         
-        <div class="success" id="success">
-            <div class="success-icon">✅</div>
-            <div class="success-title">Download Started!</div>
-            <div class="success-text">Your Word file is being downloaded...</div>
+        <div class="result" id="result">
+            <div class="result-title">✅ Success!</div>
+            <a href="#" class="download-btn" id="downloadBtn" download>
+                📥 Download Word File
+            </a>
+            <div class="result-info" id="resultInfo"></div>
         </div>
         
         <div class="error" id="error"></div>
         
-        <div class="creator">
-            <h2>Application Created By</h2>
-            <h1>SANTOSH SINGH RAGHUWANSHI</h1>
+        <div class="features">
+            <div style="text-align: center; padding: 30px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; margin-top: 30px;">
+                <h2 style="color: white; font-size: 32px; font-weight: bold; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                    Application Created By
+                </h2>
+                <h1 style="color: #FFD700; font-size: 42px; font-weight: bold; margin: 0; text-shadow: 3px 3px 6px rgba(0,0,0,0.5); letter-spacing: 2px;">
+                    SANTOSH SINGH RAGHUWANSHI
+                </h1>
+            </div>
         </div>
     </div>
     
     <script>
-        const WEBHOOK_URL = 'https://n8n.bluechipcomputers.in/webhook/pdf-to-word-final';
-        
+        const webhookUrlInput = document.getElementById('webhookUrlInput');
         const uploadArea = document.getElementById('uploadArea');
         const fileInput = document.getElementById('fileInput');
         const fileInfo = document.getElementById('fileInfo');
@@ -306,13 +383,31 @@
         const progress = document.getElementById('progress');
         const progressFill = document.getElementById('progressFill');
         const progressText = document.getElementById('progressText');
-        const success = document.getElementById('success');
+        const result = document.getElementById('result');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const resultInfo = document.getElementById('resultInfo');
         const errorDiv = document.getElementById('error');
         
         let selectedFile = null;
         
-        uploadArea.addEventListener('click', () => fileInput.click());
-        fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+        // Load saved webhook URL
+        const savedUrl = localStorage.getItem('webhookUrl');
+        if (savedUrl) {
+            webhookUrlInput.value = savedUrl;
+        }
+        
+        // Save webhook URL
+        webhookUrlInput.addEventListener('change', () => {
+            localStorage.setItem('webhookUrl', webhookUrlInput.value);
+        });
+        
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            handleFile(e.target.files[0]);
+        });
         
         uploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -333,7 +428,7 @@
             if (!file) return;
             
             if (file.type !== 'application/pdf') {
-                showError('⚠️ Please upload PDF file only');
+                showError('कृपया केवल PDF file upload करें');
                 return;
             }
             
@@ -342,61 +437,69 @@
             fileSize.textContent = `Size: ${(file.size / 1024).toFixed(2)} KB`;
             fileInfo.classList.add('show');
             convertBtn.disabled = false;
-            success.classList.remove('show');
+            result.classList.remove('show');
             errorDiv.classList.remove('show');
         }
         
         convertBtn.addEventListener('click', async () => {
             if (!selectedFile) return;
             
+            const webhookUrl = webhookUrlInput.value.trim();
+            
+            if (!webhookUrl) {
+                showError('कृपया Webhook URL enter करें');
+                webhookUrlInput.focus();
+                return;
+            }
+            
             convertBtn.disabled = true;
             progress.classList.add('show');
-            success.classList.remove('show');
+            result.classList.remove('show');
             errorDiv.classList.remove('show');
             
             const formData = new FormData();
             formData.append('data', selectedFile);
             
             try {
-                updateProgress(30, '📤 Uploading PDF...');
+                updateProgress(30, 'Uploading...');
                 
-                const response = await fetch(WEBHOOK_URL, {
+                const response = await fetch(webhookUrl, {
                     method: 'POST',
                     body: formData
                 });
                 
-                updateProgress(60, '🔍 Extracting text...');
+                updateProgress(60, 'Extracting text...');
                 
                 if (!response.ok) {
                     throw new Error(`Server error: ${response.status}`);
                 }
                 
-                updateProgress(90, '📝 Creating Word document...');
+                const data = await response.json();
                 
-                // Get file as blob
-                const blob = await response.blob();
+                console.log('Response data:', data);
                 
-                updateProgress(100, '✅ Complete!');
+                updateProgress(90, 'Creating document...');
                 
-                // Auto download
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `extracted_${Date.now()}.docx`;
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
+                // Handle response - it's an array with one object
+                let responseData = data;
+                if (Array.isArray(data) && data.length > 0) {
+                    responseData = data[0];
+                }
+                
+                if (!responseData.success) {
+                    throw new Error(responseData.error || 'Conversion failed');
+                }
+                
+                updateProgress(100, 'Complete!');
                 
                 setTimeout(() => {
+                    showResult(responseData);
                     progress.classList.remove('show');
-                    success.classList.add('show');
-                    convertBtn.disabled = false;
                 }, 500);
                 
             } catch (error) {
                 console.error('Error:', error);
-                showError(`❌ Error: ${error.message}. Please try again.`);
+                showError(`Error: ${error.message}`);
                 progress.classList.remove('show');
                 convertBtn.disabled = false;
             }
@@ -407,7 +510,7 @@
             fileInput.value = '';
             fileInfo.classList.remove('show');
             convertBtn.disabled = true;
-            success.classList.remove('show');
+            result.classList.remove('show');
             errorDiv.classList.remove('show');
             progress.classList.remove('show');
         });
@@ -417,8 +520,29 @@
             progressText.textContent = text;
         }
         
+        function showResult(data) {
+            result.classList.add('show');
+            
+            // Build download URL
+            let downloadUrl = data.downloadUrl;
+            if (downloadUrl && !downloadUrl.startsWith('http')) {
+                downloadUrl = `http://localhost:5000${downloadUrl}`;
+            }
+            
+            downloadBtn.href = downloadUrl || `http://localhost:5000/download/${data.filename}`;
+            downloadBtn.download = data.filename || 'extracted.docx';
+            
+            resultInfo.innerHTML = `
+                <strong>📊 Details:</strong><br>
+                Filename: ${data.filename || 'N/A'}<br>
+                Text Length: ${data.textLength || 'N/A'} characters<br>
+                <br>
+                <em>💡 Click the button above to download your Word file!</em>
+            `;
+        }
+        
         function showError(message) {
-            errorDiv.textContent = message;
+            errorDiv.textContent = '❌ ' + message;
             errorDiv.classList.add('show');
         }
     </script>
